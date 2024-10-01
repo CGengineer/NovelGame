@@ -2,7 +2,7 @@
 ①git windows をインストール
 ②git bash が入ったら。任意のフォルダを作り、右クリック、git bashを選択。
 ③git init コマンドでgitのローカルリポジトリを作る。
-④git remote add origin ttps://ghp_m3psJeOH0BdgzfwdYksFlACYYMIFSWM1ae9AWi@github.com/CGengineer/NovelGame.git
+④git remote add origin https://トークン@github.com/CGengineer/NovelGame.git
 ⑤フォルダに何かしらの変更分を用意する。例えば、txtのﾌｧｲﾙを作成する。
 ⑥git add .
 ⑦git commit -m "コメントなんでも"
