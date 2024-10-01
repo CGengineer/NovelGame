@@ -39,6 +39,7 @@ public class MainStory : MonoBehaviour
     [System.Serializable]
     public class LoopSetup
     {
+        public string Memo;
         /// <summary>文章を画面に出てくる文章リスト</summary>
         public List<string> MessageList;
         /// <summary>画面に出てくるテキストボックスの表示非表示フラグ</summary>
@@ -49,12 +50,13 @@ public class MainStory : MonoBehaviour
         public string ChoiceTextOne;
         /// <summary>選択肢2のテキスト</summary>
         public string ChoiceTextTwo;
-        public List<LoopSetup> OneChoiseChildLoopSetup;
-        public List<LoopSetup> TwoChoiseChildLoopSetup;
+        /// <summary>選択肢1を押した後に移動する要素</summary>
+        public int ChoiceOneSkipElementIndex;
+        /// <summary>選択肢1を押した後に移動する要素</summary>
+        public int ChoiceTwoSkipElementIndex;
         /// <summary>キャラクターイメージクラス</summary>
         //フィールドの古い名前を指定することで、以前のデータが新しいフィールド名にマッピングされる
         [FormerlySerializedAs("ImageClass")]
-
         public ImageClass ImageClass;
 
     }
@@ -140,183 +142,86 @@ public class MainStory : MonoBehaviour
 
     private void ChangeObject()
     {
-        if (!LoopSetupFlag)
+
+        if (_LoopSetupList[_LoopSetupListIndex].ImageClass.AllFadeFlag)
         {
-            if (_LoopSetupList[_LoopSetupListIndex].ImageClass.AllFadeFlag)
+            var currentColor = FadeInOut.color;
+
+            if (_AllFadeInOutFlag && currentColor.a < 1f)
             {
-                var currentColor = FadeInOut.color;
+                currentColor.a += _LoopSetupList[_LoopSetupListIndex].ImageClass.FadeSpeed;
 
-                if (_AllFadeInOutFlag && currentColor.a < 1f)
-                {
-                    currentColor.a += _LoopSetupList[_LoopSetupListIndex].ImageClass.FadeSpeed;
-
-                    _FadeFinishFlag = false;
-                }
-                else
-                {
-                    _AllFadeInOutFlag = false;
-
-                    SetObject();
-
-                    if (!_AllFadeInOutFlag && currentColor.a > 0f)
-                    {
-                        currentColor.a -= _LoopSetupList[_LoopSetupListIndex].ImageClass.FadeSpeed;
-                    }
-                    else
-                    {
-                        _FadeFinishFlag = true;
-                    }
-                }
-                FadeInOut.color = currentColor;
+                _FadeFinishFlag = false;
             }
             else
             {
+                _AllFadeInOutFlag = false;
+
                 SetObject();
+
+                if (!_AllFadeInOutFlag && currentColor.a > 0f)
+                {
+                    currentColor.a -= _LoopSetupList[_LoopSetupListIndex].ImageClass.FadeSpeed;
+                }
+                else
+                {
+                    _FadeFinishFlag = true;
+                }
             }
+            FadeInOut.color = currentColor;
         }
         else
         {
-            if (_LoopSetupList[_ChildLoopSetupListIndex].ImageClass.AllFadeFlag)
-            {
-                var currentColor = FadeInOut.color;
-
-                if (_AllFadeInOutFlag && currentColor.a < 1f)
-                {
-                    currentColor.a += _LoopSetupList[_ChildLoopSetupListIndex].ImageClass.FadeSpeed;
-
-                    _FadeFinishFlag = false;
-                }
-                else
-                {
-                    _AllFadeInOutFlag = false;
-
-                    SetObject();
-
-                    if (!_AllFadeInOutFlag && currentColor.a > 0f)
-                    {
-                        currentColor.a -= _LoopSetupList[_ChildLoopSetupListIndex].ImageClass.FadeSpeed;
-                    }
-                    else
-                    {
-                        _FadeFinishFlag = true;
-                    }
-                }
-                FadeInOut.color = currentColor;
-            }
-            else
-            {
-                SetObject();
-            }
+            SetObject();
         }
-
-    }
-
-    private List<LoopSetup> GetLoopSetupList(List<LoopSetup> loopSetupsList)
-    {
-
-        foreach (var loopSetup in loopSetupsList)
-        {
-            if (loopSetup.TextChoiceFlag)
-            {
-                if (OneChoiseClickFlag)
-                {
-                    LoopSetupFlag = true;
-                    _ChildLoopSetupListIndex = 0;
-                    _ChildMessageListIndex = 0;
-                    OneChoiseClickFlag = false;
-                    return GetLoopSetupList(loopSetup.OneChoiseChildLoopSetup);
-                }
-
-                if (TwoChoiseClickFlag)
-                {
-                    LoopSetupFlag = true;
-                    _ChildLoopSetupListIndex = 0;
-                    _ChildMessageListIndex = 0;
-                    TwoChoiseClickFlag = false;
-                    return GetLoopSetupList(loopSetup.TwoChoiseChildLoopSetup);
-                }
-
-            }
-        }
-        return loopSetupsList;
     }
 
     private IEnumerator Novel()
     {
-        _LoopSetupList = GetLoopSetupList(_LoopSetupList);
-
-        if (LoopSetupFlag)
+        if (_LoopSetupList[_LoopSetupListIndex].MessageList.Count > 0)
         {
-            if (_LoopSetupList[_ChildLoopSetupListIndex].MessageList.Count > 0)
+            var messageCount = 0;
+            var currentMessage = _LoopSetupList[_LoopSetupListIndex].MessageList[_MessageListIndex];
+            Text.text = "";
+
+            if (_FirstClickFlag)
             {
-                var messageCount = 0;
-                var currentMessage = _LoopSetupList[_ChildLoopSetupListIndex].MessageList[_ChildMessageListIndex];
-                Text.text = "";
+                _FirstClickFlag = false;
 
-                if (_FirstClickFlag)
+                while (currentMessage.Length > Text.text.Length)
                 {
-                    _FirstClickFlag = false;
-
-                    while (currentMessage.Length > Text.text.Length)
-                    {
-                        Text.text += currentMessage[messageCount];
-                        messageCount++;
-                        yield return new WaitForSeconds(_NovelSpeed);
-                    }
-                    //ループしている最中に、クリックして新しい処理を起こすとダブルで処理が走る。これは覚えておこう。
-                    ChildSetRestart(_LoopSetupList);
+                    Text.text += currentMessage[messageCount];
+                    messageCount++;
+                    yield return new WaitForSeconds(_NovelSpeed);
                 }
-                else
-                {
-                    Text.text = currentMessage;
-                    _TextDisplayEnd = false;
-                    yield return new WaitForSeconds(0.25f);
-                    _TextDisplayEnd = true;
-                }
-
-
+                //ループしている最中に、クリックして新しい処理を起こすとダブルで処理が走る。これは覚えておこう。
+                SetRestart();
             }
             else
             {
-                _ChildLoopSetupListIndex++;
-                _AllFadeInOutFlag = true;
+                Text.text = currentMessage;
+                _TextDisplayEnd = false;
+                yield return new WaitForSeconds(0.25f);
+                _TextDisplayEnd = true;
             }
         }
         else
         {
-            if (_LoopSetupList[_LoopSetupListIndex].MessageList.Count > 0)
+            if (_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex  >= 1)
             {
-                var messageCount = 0;
-                var currentMessage = _LoopSetupList[_LoopSetupListIndex].MessageList[_MessageListIndex];
-                Text.text = "";
-
-                if (_FirstClickFlag)
-                {
-                    _FirstClickFlag = false;
-
-                    while (currentMessage.Length > Text.text.Length)
-                    {
-                        Text.text += currentMessage[messageCount];
-                        messageCount++;
-                        yield return new WaitForSeconds(_NovelSpeed);
-                    }
-                    //ループしている最中に、クリックして新しい処理を起こすとダブルで処理が走る。これは覚えておこう。
-                    SetRestart();
-                }
-                else
-                {
-                    Text.text = currentMessage;
-                    _TextDisplayEnd = false;
-                    yield return new WaitForSeconds(0.25f);
-                    _TextDisplayEnd = true;
-                }
+                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex;
+            }
+            else if (_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex >= 1)
+            {
+                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex;
             }
             else
             {
                 _LoopSetupListIndex++;
-                _AllFadeInOutFlag = true;
             }
+            _AllFadeInOutFlag = true;
         }
+
     }
 
     private void SetRestart()
@@ -327,7 +232,18 @@ public class MainStory : MonoBehaviour
 
         if (_LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex)
         {
-            _LoopSetupListIndex++;
+            if (_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex >= 1)
+            {
+                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex;
+            }
+            else if (_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex >= 1)
+            {
+                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex;
+            }
+            else
+            {
+                _LoopSetupListIndex++;
+            }
             _MessageListIndex = 0;
             _AllFadeInOutFlag = true;
             Text.text = "";
@@ -351,87 +267,45 @@ public class MainStory : MonoBehaviour
 
     private void SetObject()
     {
-        if (!LoopSetupFlag)
+        if (_LoopSetupList[_LoopSetupListIndex].TextBoxDisplayFlag)
         {
-            if (_LoopSetupList[_LoopSetupListIndex].TextBoxDisplayFlag)
-            {
-                _btnMessage.gameObject.SetActive(true);
-            }
-            else
-            {
-                _btnMessage.gameObject.SetActive(false);
-            }
-
-            if (_LoopSetupList[_LoopSetupListIndex].TextChoiceFlag)
-            {
-                _btnChooseOne.gameObject.SetActive(true);
-                _txtChooseOne.text = _LoopSetupList[_LoopSetupListIndex].ChoiceTextOne;
-                _btnChooseTwo.gameObject.SetActive(true);
-                _txtChooseTwo.text = _LoopSetupList[_LoopSetupListIndex].ChoiceTextTwo;
-            }
-            else
-            {
-                _btnChooseOne.gameObject.SetActive(false);
-                _txtChooseOne.text = "";
-                _btnChooseTwo.gameObject.SetActive(false);
-                _txtChooseTwo.text = "";
-            }
-
-            var imageClass = _LoopSetupList[_LoopSetupListIndex].ImageClass;
-
-            _ImageComponent_Background.sprite = imageClass.BackBroundImage;
-
-            _ImageComponent_RightCharacter.sprite = imageClass.RightCharacterImage;
-            CharacterImageFadeOut(_ImageComponent_RightCharacter, imageClass.RightCharacterFadeFlag);
-
-            _ImageComponent_CenterCharacter.sprite = imageClass.CenterCharacterImage;
-            CharacterImageFadeOut(_ImageComponent_CenterCharacter, imageClass.CenterCharacterFadeFlag);
-
-            _ImageComponent_LeftCharacter.sprite = imageClass.LeftCharacterImage;
-            CharacterImageFadeOut(_ImageComponent_LeftCharacter, imageClass.LeftCharacterFadeFlag);
+            _btnMessage.gameObject.SetActive(true);
         }
         else
         {
-            if (_LoopSetupList[_ChildLoopSetupListIndex].TextBoxDisplayFlag)
-            {
-                _btnMessage.gameObject.SetActive(true);
-            }
-            else
-            {
-                _btnMessage.gameObject.SetActive(false);
-            }
-
-            if (_LoopSetupList[_ChildLoopSetupListIndex].TextChoiceFlag)
-            {
-                _btnChooseOne.gameObject.SetActive(true);
-                _txtChooseOne.text = _LoopSetupList[_ChildLoopSetupListIndex].ChoiceTextOne;
-                _btnChooseTwo.gameObject.SetActive(true);
-                _txtChooseTwo.text = _LoopSetupList[_ChildLoopSetupListIndex].ChoiceTextTwo;
-            }
-            else
-            {
-                _btnChooseOne.gameObject.SetActive(false);
-                _txtChooseOne.text = "";
-                _btnChooseTwo.gameObject.SetActive(false);
-                _txtChooseTwo.text = "";
-            }
-
-            var imageClass = _LoopSetupList[_ChildLoopSetupListIndex].ImageClass;
-
-            _ImageComponent_Background.sprite = imageClass.BackBroundImage;
-
-            _ImageComponent_RightCharacter.sprite = imageClass.RightCharacterImage;
-            CharacterImageFadeOut(_ImageComponent_RightCharacter, imageClass.RightCharacterFadeFlag);
-
-            _ImageComponent_CenterCharacter.sprite = imageClass.CenterCharacterImage;
-            CharacterImageFadeOut(_ImageComponent_CenterCharacter, imageClass.CenterCharacterFadeFlag);
-
-            _ImageComponent_LeftCharacter.sprite = imageClass.LeftCharacterImage;
-            CharacterImageFadeOut(_ImageComponent_LeftCharacter, imageClass.LeftCharacterFadeFlag);
+            _btnMessage.gameObject.SetActive(false);
         }
 
+        if (_LoopSetupList[_LoopSetupListIndex].TextChoiceFlag)
+        {
+            _btnChooseOne.gameObject.SetActive(true);
+            _txtChooseOne.text = _LoopSetupList[_LoopSetupListIndex].ChoiceTextOne;
+            _btnChooseTwo.gameObject.SetActive(true);
+            _txtChooseTwo.text = _LoopSetupList[_LoopSetupListIndex].ChoiceTextTwo;
+        }
+        else
+        {
+            _btnChooseOne.gameObject.SetActive(false);
+            _txtChooseOne.text = "";
+            _btnChooseTwo.gameObject.SetActive(false);
+            _txtChooseTwo.text = "";
+        }
+
+        var imageClass = _LoopSetupList[_LoopSetupListIndex].ImageClass;
+
+        _ImageComponent_Background.sprite = imageClass.BackBroundImage;
+
+        _ImageComponent_RightCharacter.sprite = imageClass.RightCharacterImage;
+        CharacterImageFadeOut(_ImageComponent_RightCharacter, imageClass.RightCharacterFadeFlag);
+
+        _ImageComponent_CenterCharacter.sprite = imageClass.CenterCharacterImage;
+        CharacterImageFadeOut(_ImageComponent_CenterCharacter, imageClass.CenterCharacterFadeFlag);
+
+        _ImageComponent_LeftCharacter.sprite = imageClass.LeftCharacterImage;
+        CharacterImageFadeOut(_ImageComponent_LeftCharacter, imageClass.LeftCharacterFadeFlag);
+
     }
-    private void CharacterImageFadeOut(Image image,bool fadeFlag)
+    private void CharacterImageFadeOut(Image image, bool fadeFlag)
     {
         if (fadeFlag)
         {
