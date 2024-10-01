@@ -28,11 +28,10 @@ git branch | xargs git branch -D
 変更履歴が違ってプルリクエストが出せない場合
 メインブランチに戻って
 git pull origin master --allow-unrelated-histories
-a
-ijyoua
-tooookn
 
-ghp_m3psJeOH0BdgzfwdYksFlACYYMIFSWM1ae9AWi
+
+ghp_1s5u0whMfF0BvlAH
+P72ENYNQM7OgOx3pF8cu
 
 
 画像を圧縮する場合
