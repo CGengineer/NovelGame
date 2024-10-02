@@ -14,7 +14,7 @@ public class ButtonController : MonoBehaviour
 
     public void StartButtonClick()
     {
-        FadeManager.Instance.LoadScene("GameScene",1f);
+        FadeManager.Instance.LoadScene("2_PreviousScene", 1.5f);
     }
     public void ContinueButtonClick()
     {

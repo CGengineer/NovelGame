@@ -9,12 +9,14 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.Serialization;
 using UnityEngine.Scripting;
+using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
 public class MainStory : MonoBehaviour
 {
     public static bool OneChoiseClickFlag = false;
     public static bool TwoChoiseClickFlag = false;
-    public bool LoopSetupFlag;
+    private  bool ChoiseClickNotProcessFlag = false;
 
     /// <summary>現在のループリストのインデックス</summary>
     private int _ChildLoopSetupListIndex = 0;
@@ -43,8 +45,10 @@ public class MainStory : MonoBehaviour
         /// <summary>文章を画面に出てくる文章リスト</summary>
         public List<string> MessageList;
         /// <summary>画面に出てくるテキストボックスの表示非表示フラグ</summary>
+        /// <summary>選択肢1を押した後に移動する要素</summary>
+        public int DefaultSkipElementIndex;
         public bool TextBoxDisplayFlag;
-        /// <summary>選択肢を出すか出さないかのフラグ</summary>
+        /// <summary>選択肢を出すか出さないかのsフラグ</summary>
         public bool TextChoiceFlag;
         /// <summary>選択肢1のテキスト</summary>
         public string ChoiceTextOne;
@@ -119,25 +123,66 @@ public class MainStory : MonoBehaviour
     public int _DebugCount;
     #endregion
 
+    private int _SceneNameNumber;
+
+
     private void Start()
     {
         _LoopSetupListIndex = _DebugCount;
         _ChildLoopSetupListIndex = _DebugCount;
 
         SetObject();
+        // 現在のシーンを取得
+        _SceneNameNumber = int.Parse(SceneManager.GetActiveScene().name[0].ToString());
+
     }
 
     void Update()
     {
-        ChangeObject();
-
         if (_FadeFinishFlag && _TextDisplayEnd)
         {
             if (Input.GetMouseButtonDown(0))
             {
+
+                switch (_SceneNameNumber)
+                {
+                    case 2:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+                            FadeManager.Instance.LoadScene("3_HomeScene", 1f);
+                            return;
+                        }
+                        break;
+                    case 3:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+                            FadeManager.Instance.LoadScene("4_SusanaoCry", 1f);
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
                 StartCoroutine(Novel());
             }
+            else
+            {
+                if (OneChoiseClickFlag || TwoChoiseClickFlag)
+                {
+                    StartCoroutine(Novel());
+                }
+            }
         }
+        if (!ChoiseClickNotProcessFlag)
+        {
+            ChangeObject();
+        }
+        else
+        {
+            SetObject();
+        }
+
     }
 
     private void ChangeObject()
@@ -207,18 +252,7 @@ public class MainStory : MonoBehaviour
         }
         else
         {
-            if (_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex  >= 1)
-            {
-                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex;
-            }
-            else if (_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex >= 1)
-            {
-                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex;
-            }
-            else
-            {
-                _LoopSetupListIndex++;
-            }
+            Set_LoopSetupListIndex();
             _AllFadeInOutFlag = true;
         }
 
@@ -232,22 +266,51 @@ public class MainStory : MonoBehaviour
 
         if (_LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex)
         {
-            if (_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex >= 1)
+            Set_LoopSetupListIndex();
+            _MessageListIndex = 0;
+            _AllFadeInOutFlag = true;
+            Text.text = "";
+        }
+    }
+
+
+    public void Set_LoopSetupListIndex()
+    {
+        if (_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex >= 1 || _LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex >= 1)
+        {
+            if (OneChoiseClickFlag)
             {
                 _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex;
+                OneChoiseClickFlag = false;
+                ChoiseClickNotProcessFlag = false;
             }
-            else if (_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex >= 1)
+            else if (TwoChoiseClickFlag)
             {
                 _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex;
+                TwoChoiseClickFlag = false;
+                ChoiseClickNotProcessFlag = false;
+            }
+            else if (_LoopSetupList[_LoopSetupListIndex].DefaultSkipElementIndex >= 1)
+            {
+                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].DefaultSkipElementIndex;
+            }
+            else
+            {
+                ChoiseClickNotProcessFlag = true;
+            }
+        }
+        else
+        {
+            if (_LoopSetupList[_LoopSetupListIndex].DefaultSkipElementIndex >= 1)
+            {
+                _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].DefaultSkipElementIndex;
             }
             else
             {
                 _LoopSetupListIndex++;
             }
-            _MessageListIndex = 0;
-            _AllFadeInOutFlag = true;
-            Text.text = "";
         }
+
     }
 
     private void ChildSetRestart(List<LoopSetup> loopSetupsList)

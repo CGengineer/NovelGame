@@ -3,15 +3,15 @@
   "WorkspaceRootPath": "D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|d:\\desktop\\github\\novelgame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\assets\\script\\mainstory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mainstory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\assets\\script\\choisebuttonclick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\choisebuttonclick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\assets\\script\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\assets\\script\\mainstory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mainstory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|d:\\desktop\\github\\novelgame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\assets\\script\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BD13C348-54F5-BF0A-B495-637FE1401ADF}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\buttoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -40,30 +40,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ChoiseButtonClick.cs",
               "DocumentMoniker": "D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\Assets\\Script\\ChoiseButtonClick.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\ChoiseButtonClick.cs",
               "ToolTip": "D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\Assets\\Script\\ChoiseButtonClick.cs",
               "RelativeToolTip": "Assets\\Script\\ChoiseButtonClick.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T14:22:32.9Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MainStory.cs",
               "DocumentMoniker": "D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\Assets\\Script\\MainStory.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\MainStory.cs",
               "ToolTip": "D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\Assets\\Script\\MainStory.cs",
               "RelativeToolTip": "Assets\\Script\\MainStory.cs",
-              "ViewState": "AgIAAM0AAAAAAAAAAAAAAO0AAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAoBAAAAAAAAAAAgwA8BAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-21T13:36:53.445Z",
               "EditorCaption": ""
@@ -130,9 +130,10 @@
               "RelativeDocumentMoniker": "Assets\\Script\\ButtonController.cs",
               "ToolTip": "D:\\desktop\\GitHub\\NovelGame\\\u30CE\u30D9\u30EB\u30B2\u30FC\u30E0\\Assets\\Script\\ButtonController.cs",
               "RelativeToolTip": "Assets\\Script\\ButtonController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-21T13:36:53.529Z"
+              "WhenOpened": "2024-09-21T13:36:53.529Z",
+              "EditorCaption": ""
             }
           ]
         }
