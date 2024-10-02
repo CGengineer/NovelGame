@@ -118,9 +118,11 @@ m_ResolvedPackages:
     - 2.4.3
     - 2.4.4
     - 2.5.1
+    - 2.5.2
     compatible:
     - 2.4.4
     - 2.5.1
+    - 2.5.2
     verified: 2.4.4
   dependencies: []
   resolvedDependencies: []
