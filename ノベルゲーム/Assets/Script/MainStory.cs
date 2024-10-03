@@ -16,7 +16,10 @@ public class MainStory : MonoBehaviour
 {
     public static bool OneChoiseClickFlag = false;
     public static bool TwoChoiseClickFlag = false;
-    private  bool ChoiseClickNotProcessFlag = false;
+    private bool ChoiseClickNotProcessFlag = false;
+
+    public AudioSource VoiceAudioSource;// AudioSourceコンポーネント
+    public AudioSource BGMAudioSource;// AudioSourceコンポーネント
 
     /// <summary>現在のループリストのインデックス</summary>
     private int _ChildLoopSetupListIndex = 0;
@@ -44,6 +47,7 @@ public class MainStory : MonoBehaviour
         public string Memo;
         /// <summary>文章を画面に出てくる文章リスト</summary>
         public List<string> MessageList;
+        public List<AudioClip> VoiceClips;         // セリフごとのAudioClip配列
         /// <summary>画面に出てくるテキストボックスの表示非表示フラグ</summary>
         /// <summary>選択肢1を押した後に移動する要素</summary>
         public int DefaultSkipElementIndex;
@@ -58,6 +62,7 @@ public class MainStory : MonoBehaviour
         public int ChoiceOneSkipElementIndex;
         /// <summary>選択肢1を押した後に移動する要素</summary>
         public int ChoiceTwoSkipElementIndex;
+        public AudioClip BGMClips;         // セリフごとのAudioClip配列
         /// <summary>キャラクターイメージクラス</summary>
         //フィールドの古い名前を指定することで、以前のデータが新しいフィールド名にマッピングされる
         [FormerlySerializedAs("ImageClass")]
@@ -134,7 +139,7 @@ public class MainStory : MonoBehaviour
         SetObject();
         // 現在のシーンを取得
         _SceneNameNumber = int.Parse(SceneManager.GetActiveScene().name[0].ToString());
-
+        BGMClip(_LoopSetupListIndex);
     }
 
     void Update()
@@ -241,6 +246,7 @@ public class MainStory : MonoBehaviour
                 }
                 //ループしている最中に、クリックして新しい処理を起こすとダブルで処理が走る。これは覚えておこう。
                 SetRestart();
+                PlayVoice(_MessageListIndex);
             }
             else
             {
@@ -283,16 +289,19 @@ public class MainStory : MonoBehaviour
                 _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceOneSkipElementIndex;
                 OneChoiseClickFlag = false;
                 ChoiseClickNotProcessFlag = false;
+                BGMClip(_LoopSetupListIndex);
             }
             else if (TwoChoiseClickFlag)
             {
                 _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].ChoiceTwoSkipElementIndex;
                 TwoChoiseClickFlag = false;
                 ChoiseClickNotProcessFlag = false;
+                BGMClip(_LoopSetupListIndex);
             }
             else if (_LoopSetupList[_LoopSetupListIndex].DefaultSkipElementIndex >= 1)
             {
                 _LoopSetupListIndex = (int)_LoopSetupList[_LoopSetupListIndex].DefaultSkipElementIndex;
+                BGMClip(_LoopSetupListIndex);
             }
             else
             {
@@ -309,9 +318,12 @@ public class MainStory : MonoBehaviour
             {
                 _LoopSetupListIndex++;
             }
+            BGMClip(_LoopSetupListIndex);
         }
 
     }
+
+
 
     private void ChildSetRestart(List<LoopSetup> loopSetupsList)
     {
@@ -390,6 +402,38 @@ public class MainStory : MonoBehaviour
                 _FadeFinishFlag = true;
             }
             image.color = currentColor;
+        }
+    }
+
+    public void PlayVoice(int lineIndex)
+    {
+        if (lineIndex < _LoopSetupList[_LoopSetupListIndex].VoiceClips.Count && _LoopSetupList[_LoopSetupListIndex].VoiceClips[_MessageListIndex] != null)
+        {
+            VoiceAudioSource.clip = _LoopSetupList[_LoopSetupListIndex].VoiceClips[_MessageListIndex];
+            VoiceAudioSource.Play();
+        }
+    }
+
+    private void BGMClip(int lineIndex)
+    {
+        if (_LoopSetupList[_LoopSetupListIndex].BGMClips != null)
+        {
+            if (BGMAudioSource.clip == null)
+            {
+                BGMAudioSource.clip = _LoopSetupList[_LoopSetupListIndex].BGMClips;
+                BGMAudioSource.Play();
+            }
+            else if (_LoopSetupListIndex >= 1)
+            {
+                if (_LoopSetupList[_LoopSetupListIndex - 1].BGMClips != _LoopSetupList[_LoopSetupListIndex].BGMClips)
+                {
+                    BGMAudioSource.clip = _LoopSetupList[_LoopSetupListIndex].BGMClips;
+                    BGMAudioSource.Play();
+                }
+            }
+
+
+
         }
     }
 
