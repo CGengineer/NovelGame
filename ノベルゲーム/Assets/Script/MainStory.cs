@@ -161,7 +161,8 @@ public class MainStory : MonoBehaviour
                     case 3:
                         if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
                         {
-                            FadeManager.Instance.LoadScene("4_SusanaoCry", 1f);
+
+                            FadeManager.Instance.LoadScene("4_SpiritWorld", 1f);
                             return;
                         }
                         break;
