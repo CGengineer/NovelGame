@@ -78,7 +78,7 @@ public class MainStory : MonoBehaviour
         ///<summary>全体フェードフラグ</summary>
         public bool AllFadeFlag;
         /// <summary>フェードインフェードアウトの速度</summary>
-        public float FadeSpeed;
+        public float FadeSpeed = 0.01f;
         /// <summary>キャラクター右画像</summary>
         public Sprite RightCharacterImage;
         /// <summary>キャラクター右画像フェードフラグ</summary>
