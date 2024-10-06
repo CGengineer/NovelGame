@@ -144,6 +144,11 @@ public class MainStory : MonoBehaviour
 
     void Update()
     {
+        if (_LoopSetupList[_LoopSetupListIndex].ImageClass.FadeSpeed == 0)
+        {
+            _LoopSetupList[_LoopSetupListIndex].ImageClass.FadeSpeed = 0.01f;
+        }
+        ;
         if (_FadeFinishFlag && _TextDisplayEnd)
         {
             if (Input.GetMouseButtonDown(0))
@@ -166,11 +171,43 @@ public class MainStory : MonoBehaviour
                             return;
                         }
                         break;
+                    case 4:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+
+                            FadeManager.Instance.LoadScene("5_OneQuestion", 1f);
+                            return;
+                        }
+                        break;
+                    case 5:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+
+                            FadeManager.Instance.LoadScene("6_TwoQuestion", 1f);
+                            return;
+                        }
+                        break;
+                    case 6:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+
+                            FadeManager.Instance.LoadScene("7_Corridor", 1f);
+                            return;
+                        }
+                        break;
+                    case 7:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+
+                            FadeManager.Instance.LoadScene("8_MovieTheater", 1f);
+                            return;
+                        }
+                        break;
                     default:
                         break;
                 }
 
-                StartCoroutine(Novel());
+                StartCoroutine(Novel()); 
             }
             else
             {
