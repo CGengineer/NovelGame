@@ -200,7 +200,7 @@ MonoBehaviour:
     ImageClass:
       BackBroundImage: {fileID: 21300000, guid: dd9b780dc9675d645b9a816b9b293260, type: 3}
       AllFadeFlag: 1
-      FadeSpeed: 0
+      FadeSpeed: 0.1
       RightCharacterImage: {fileID: 21300000, guid: 71cb8ba7d9f80ff40a7d3ad71a46142b, type: 3}
       RightCharacterFadeFlag: 0
       CenterCharacterImage: {fileID: 21300000, guid: 71cb8ba7d9f80ff40a7d3ad71a46142b, type: 3}
@@ -261,7 +261,7 @@ MonoBehaviour:
     ImageClass:
       BackBroundImage: {fileID: 21300000, guid: 8b7c75ff191f1294093cb00572a78b7b, type: 3}
       AllFadeFlag: 1
-      FadeSpeed: 0
+      FadeSpeed: 0.01
       RightCharacterImage: {fileID: 21300000, guid: 71cb8ba7d9f80ff40a7d3ad71a46142b, type: 3}
       RightCharacterFadeFlag: 0
       CenterCharacterImage: {fileID: 21300000, guid: 71cb8ba7d9f80ff40a7d3ad71a46142b, type: 3}
