@@ -24,3 +24,6 @@
 * text=auto eol=lf
 *.csproj text eol=lf
 
+
+Library/
+
