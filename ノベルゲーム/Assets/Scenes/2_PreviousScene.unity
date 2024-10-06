@@ -190,6 +190,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}
@@ -211,6 +213,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}
@@ -232,6 +236,8 @@ MonoBehaviour:
     TextChoiceFlag: 1
     ChoiceTextOne: "\u3053\u306E\u7269\u8A9E\u3092\u59CB\u3081\u308B"
     ChoiceTextTwo: "\u3053\u306E\u7269\u8A9E\u3092\u59CB\u3081\u306A\u3044"
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 4
     ChoiceTwoSkipElementIndex: 3
     BGMClips: {fileID: 0}
@@ -256,6 +262,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}
@@ -280,6 +288,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 8300000, guid: 30135428561bd304fb950d9f51e0a52b, type: 3}
@@ -306,6 +316,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}
@@ -331,6 +343,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}
@@ -352,6 +366,8 @@ MonoBehaviour:
     TextChoiceFlag: 1
     ChoiceTextOne: "\u4E3B\u4EBA\u516C\u306B\u306A\u308B\u3002"
     ChoiceTextTwo: "\u4E3B\u4EBA\u516C\u306B\u306A\u3089\u306A\u3044\u3002"
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 9
     ChoiceTwoSkipElementIndex: 8
     BGMClips: {fileID: 0}
@@ -376,6 +392,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}
@@ -392,7 +410,7 @@ MonoBehaviour:
   - Memo: 
     MessageList:
     - "\u4E3B\u4EBA\u516C\u306B\u306A\u308A\u307E\u3057\u305F\u3002"
-    - "\u305D\u308C\u3067\u306F\u3053\u306E\u7269\u8A9E\u3092\u653B\u7565\u3057\u3066\u4E0B\u3055\u3044\u3002"
+    - "\u305D\u308C\u3067\u306F\u3053\u306E\u7269\u8A9E\u3092\u306E\u795E\u8B70\u308A\u306B\u3064\u3044\u3066\u7B54\u3048\u3092\u51FA\u3057\u3066\u4E0B\u3055\u3044\u3002"
     - 
     VoiceClips: []
     DefaultSkipElementIndex: 0
@@ -400,6 +418,8 @@ MonoBehaviour:
     TextChoiceFlag: 0
     ChoiceTextOne: 
     ChoiceTextTwo: 
+    ChoicePointOne: 0
+    ChoicePointTwo: 0
     ChoiceOneSkipElementIndex: 0
     ChoiceTwoSkipElementIndex: 0
     BGMClips: {fileID: 0}

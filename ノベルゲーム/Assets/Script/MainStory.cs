@@ -18,6 +18,8 @@ public class MainStory : MonoBehaviour
     public static bool TwoChoiseClickFlag = false;
     private bool ChoiseClickNotProcessFlag = false;
 
+    private static int TrueEndSelectPoint = 0;
+
     public AudioSource VoiceAudioSource;// AudioSourceコンポーネント
     public AudioSource BGMAudioSource;// AudioSourceコンポーネント
 
@@ -58,6 +60,11 @@ public class MainStory : MonoBehaviour
         public string ChoiceTextOne;
         /// <summary>選択肢2のテキスト</summary>
         public string ChoiceTextTwo;
+        /// <summary>選択肢1のポイント</summary>
+        public int ChoicePointOne;
+        /// <summary>選択肢2のポイント</summary>
+        public int ChoicePointTwo;
+
         /// <summary>選択肢1を押した後に移動する要素</summary>
         public int ChoiceOneSkipElementIndex;
         /// <summary>選択肢1を押した後に移動する要素</summary>
@@ -203,6 +210,21 @@ public class MainStory : MonoBehaviour
                             return;
                         }
                         break;
+                    case 8:
+                        if (_LoopSetupList.Count == _LoopSetupListIndex + 1 && _LoopSetupList[_LoopSetupListIndex].MessageList.Count == _MessageListIndex + 1)
+                        {
+                            if (TrueEndSelectPoint > 50)
+                            {
+                                FadeManager.Instance.LoadScene("9_TrueEnd", 1f); 
+                                return;
+                            }
+                            else
+                            {
+                                FadeManager.Instance.LoadScene("9_BadEnd", 1f);
+                                return;
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -213,7 +235,18 @@ public class MainStory : MonoBehaviour
             {
                 if (OneChoiseClickFlag || TwoChoiseClickFlag)
                 {
+                    if (OneChoiseClickFlag)
+                    {
+                        TrueEndSelectPoint += _LoopSetupList[_LoopSetupListIndex].ChoicePointOne;
+                    }
+
+                    if (TwoChoiseClickFlag)
+                    {
+                        TrueEndSelectPoint += _LoopSetupList[_LoopSetupListIndex].ChoicePointTwo;
+                    }
                     StartCoroutine(Novel());
+
+
                 }
             }
         }
